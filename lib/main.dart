@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('El token de sesion del ususario: ${userSession.sessionToken}');
   }
 
   @override
@@ -41,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: userSession.id != null
           ? userSession.roles!.length > 1
               ? '/roles'
-              : '/client/products/list'
+              : '/client/home'
           : '/',
       getPages: [
         GetPage(
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
         ),
         GetPage(
           name: '/client/products/list',
-          
+          // page: () => LoginPage(),
           page: () => ClientProductsListPage(),
         ),
         GetPage(

@@ -8,17 +8,19 @@ class ClientProfileInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _backgroundCover(context),
-          _boxForm(context),
-          Column(
-            children: [
-              _imageUser(context),
-            ],
-          ),
-          _buttomSignOut()
-        ],
+      body: Obx(
+        () => Stack(
+          children: [
+            _backgroundCover(context),
+            _boxForm(context),
+            Column(
+              children: [
+                _imageUser(context),
+              ],
+            ),
+            _buttomSignOut()
+          ],
+        ),
       ),
     );
   }
@@ -71,8 +73,8 @@ class ClientProfileInfoPage extends StatelessWidget {
         alignment: Alignment.topCenter,
         margin: EdgeInsets.symmetric(vertical: 10),
         child: CircleAvatar(
-          backgroundImage: con.user.image != null
-              ? NetworkImage(con.user.image!)
+          backgroundImage: con.user.value.image != null
+              ? NetworkImage(con.user.value.image!)
               : AssetImage('assets/img/user_profile.png') as ImageProvider,
           radius: 60,
           backgroundColor: Colors.white,
@@ -85,7 +87,7 @@ class ClientProfileInfoPage extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.person),
       title: Text('Nombre del usuario'),
-      subtitle: Text('${con.user.name ?? ''} '),
+      subtitle: Text('${con.user.value.name ?? ''} '),
     );
   }
 
@@ -93,7 +95,7 @@ class ClientProfileInfoPage extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.email),
       title: Text('Email'),
-      subtitle: Text('${con.user.email ?? ''} '),
+      subtitle: Text('${con.user.value.email ?? ''} '),
     );
   }
 
@@ -101,7 +103,7 @@ class ClientProfileInfoPage extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.phone),
       title: const Text('Télefono'),
-      subtitle: Text('${con.user.phone ?? ''} '),
+      subtitle: Text('${con.user.value.phone ?? ''} '),
     );
   }
 

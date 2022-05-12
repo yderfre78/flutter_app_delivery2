@@ -50,7 +50,7 @@ class LoginController extends GetxController {
   }
 
   void goToClientHomePage() {
-    Get.offNamedUntil('/client/products/list', (route) => false);
+    Get.offNamedUntil('/client/home', (route) => false);
   }
 
   void goToRolesPage() {
