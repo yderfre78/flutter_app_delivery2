@@ -72,13 +72,13 @@ class _MyAppState extends State<MyApp> {
         ),
         GetPage(
           name: '/client/products/list',
-          // page: () => LoginPage(),
-          page: () => ClientProductsListPage(),
+          page: () => LoginPage(),
+          // page: () => ClientProductsListPage(),
         ),
         GetPage(
           name: '/client/home',
-          // page: () => LoginPage(),
-          page: () => ClientHomePage(),
+          page: () => LoginPage(),
+          // page: () => ClientHomePage(),
         ),
         GetPage(
           name: '/client/profile/info',
