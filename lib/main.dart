@@ -8,6 +8,7 @@ import 'package:flutter_app_delivery_2/src/pages/delivery/orders/list/delivery_o
 import 'package:flutter_app_delivery_2/src/pages/home/home_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/login/login_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/register/register_page.dart';
+import 'package:flutter_app_delivery_2/src/pages/restaurant/home/restaurant_home_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/restaurant/orders/list/restaurant_orders_list_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/roles/roles_page.dart';
 import 'package:get/get.dart';
@@ -46,48 +47,18 @@ class _MyAppState extends State<MyApp> {
               : '/client/home'
           : '/',
       getPages: [
-        GetPage(
-          name: '/',
-          page: () => LoginPage(),
-        ),
-        GetPage(
-          name: '/register',
-          page: () => RegisterPage(),
-        ),
-        GetPage(
-          name: '/home',
-          page: () => HomePage(),
-        ),
-        GetPage(
-          name: '/roles',
-          page: () => RolesPage(),
-        ),
-        GetPage(
-          name: '/restaurant/orders/list',
-          page: () => RestaurantOrdersListPage(),
-        ),
-        GetPage(
-          name: '/delivery/orders/list',
-          page: () => DeliveryOrdersListPage(),
-        ),
-        GetPage(
-          name: '/client/products/list',
-          page: () => LoginPage(),
-          // page: () => ClientProductsListPage(),
-        ),
-        GetPage(
-          name: '/client/home',
-          page: () => LoginPage(),
-          // page: () => ClientHomePage(),
-        ),
-        GetPage(
-          name: '/client/profile/info',
-          page: () => ClientProfileInfoPage(),
-        ),
-        GetPage(
-          name: '/client/profile/update',
-          page: () => ClientProfileUpdatePage(),
-        ),
+            GetPage(name: '/', page: () => LoginPage()),
+        GetPage(name: '/register', page: () => RegisterPage()),
+        GetPage(name: '/home', page: () => HomePage()),
+        GetPage(name: '/roles', page: () => RolesPage()),
+        GetPage(name: '/delivery/orders/list',page: () => DeliveryOrdersListPage()),
+        GetPage(name: '/client/products/list',page: () => ClientProductsListPage()),
+        GetPage(name: '/client/home/page', page: () => ClientHomePage()),
+        GetPage(name: '/client/profile/info', page: () => ClientProfileInfoPage()),
+        GetPage(name: '/client/profile/update',page: () => ClientProfileUpdatePage()),
+        GetPage(name: '/restaurant/home', page: () => RestaurantHomePage()),
+        GetPage(name: '/restaurant/orders/list',page: () => RestaurantOrdersListPage()),
+
       ],
       theme: ThemeData(
           primaryColor: Colors.amber,

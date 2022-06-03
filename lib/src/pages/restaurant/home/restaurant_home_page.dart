@@ -22,10 +22,10 @@ class RestaurantHomePage extends StatelessWidget {
         () => IndexedStack(
           index: con.indexTab.value,
           children: [
-            RestaurantOrdersListPage(),
             RestaurantCategoriescreatePage(),
-            DeliveryOrdersListPage(),
-            ClientProfileInfoPage()
+            RestaurantOrdersListPage(),
+            // DeliveryOrdersListPage(),
+            ClientProfileInfoPage(),
           ],
         ),
       ),
@@ -44,27 +44,20 @@ class RestaurantHomePage extends StatelessWidget {
         onItemSelected: (index) => con.changeTab(index),
         items: [
           BottomNavyBarItem(
+              icon: Icon(Icons.apps),
+              title: Text('Home'),
+              activeColor: Colors.white,
+              inactiveColor: Colors.black),
+          BottomNavyBarItem(
               icon: Icon(Icons.list),
-              title: Text('Pedidos'),
+              title: Text('Mis Pedidos'),
               activeColor: Colors.white,
               inactiveColor: Colors.black),
           BottomNavyBarItem(
-              icon: Icon(Icons.category),
-              title: Text('Categoria'),
+              icon: Icon(Icons.person),
+              title: Text('Perfil'),
               activeColor: Colors.white,
-              inactiveColor: Colors.black),
-          BottomNavyBarItem(
-            icon: Icon(Icons.restaurant),
-            title: Text('Crear Produtos'),
-            activeColor: Colors.white,
-            inactiveColor: Colors.black,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Perfil'),
-            activeColor: Colors.white,
-            inactiveColor: Colors.black,
-          ),
+              inactiveColor: Colors.black)
         ],
       ),
     );
