@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_delivery_2/src/models/user.dart';
+import 'package:flutter_app_delivery_2/src/pages/client/home/client_home_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/profile/update/client_profile_update_page.dart';
@@ -73,6 +74,11 @@ class _MyAppState extends State<MyApp> {
           name: '/client/products/list',
           // page: () => LoginPage(),
           page: () => ClientProductsListPage(),
+        ),
+        GetPage(
+          name: '/client/home',
+          // page: () => LoginPage(),
+          page: () => ClientHomePage(),
         ),
         GetPage(
           name: '/client/profile/info',
