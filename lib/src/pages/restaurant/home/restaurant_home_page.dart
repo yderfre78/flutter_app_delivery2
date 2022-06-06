@@ -6,6 +6,7 @@ import 'package:flutter_app_delivery_2/src/pages/register/register_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/restaurant/categories/create/restaurant_categories_create.dart';
 import 'package:flutter_app_delivery_2/src/pages/restaurant/orders/list/restaurant_orders_list_controllers.dart';
 import 'package:flutter_app_delivery_2/src/pages/restaurant/orders/list/restaurant_orders_list_page.dart';
+import 'package:flutter_app_delivery_2/src/pages/restaurant/products/create/restaurant_products_create_page.dart';
 import 'package:flutter_app_delivery_2/src/utils/custom_animated_bottom_bar.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +23,9 @@ class RestaurantHomePage extends StatelessWidget {
         () => IndexedStack(
           index: con.indexTab.value,
           children: [
+            // RestaurantOrdersListPage(),
             RestaurantCategoriescreatePage(),
-            RestaurantOrdersListPage(),
+            RestaurantProductscreatePage(),
             // DeliveryOrdersListPage(),
             ClientProfileInfoPage(),
           ],
@@ -44,13 +46,13 @@ class RestaurantHomePage extends StatelessWidget {
         onItemSelected: (index) => con.changeTab(index),
         items: [
           BottomNavyBarItem(
-              icon: Icon(Icons.apps),
-              title: Text('Home'),
+              icon: Icon(Icons.category),
+              title: Text('Categorias'),
               activeColor: Colors.white,
               inactiveColor: Colors.black),
           BottomNavyBarItem(
-              icon: Icon(Icons.list),
-              title: Text('Mis Pedidos'),
+              icon: Icon(Icons.restaurant_menu),
+              title: Text('Productos'),
               activeColor: Colors.white,
               inactiveColor: Colors.black),
           BottomNavyBarItem(
