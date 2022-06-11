@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/roles', page: () => RolesPage()),
         GetPage(name: '/delivery/orders/list',page: () => DeliveryOrdersListPage()),
         GetPage(name: '/client/products/list',page: () => ClientProductsListPage()),
-        GetPage(name: '/client/home/page', page: () => ClientHomePage()),
+        GetPage(name: '/client/home', page: () => ClientHomePage()),
         GetPage(name: '/client/profile/info', page: () => ClientProfileInfoPage()),
         GetPage(name: '/client/profile/update',page: () => ClientProfileUpdatePage()),
         GetPage(name: '/restaurant/home', page: () => RestaurantHomePage()),

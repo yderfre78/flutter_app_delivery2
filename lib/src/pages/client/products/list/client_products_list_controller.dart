@@ -1,15 +1,18 @@
+import 'package:flutter_app_delivery_2/src/models/category.dart';
+import 'package:flutter_app_delivery_2/src/providers/categories_provider.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class ClientProductsLisController extends GetxController {
-  var indexTab = 0.obs;
-  void changeTab(int index) {
-    indexTab.value = index;
+  CategoriesProvider categoriesProvider = CategoriesProvider();
+  List<Category> categories = <Category>[].obs;
+
+  ClientProductsLisController() {
+    getCategories();
   }
 
-  void signOut() {
-    GetStorage().remove('user');
-
-    Get.offNamedUntil('/', (route) => false);
+  void getCategories() async {
+    var result = await categoriesProvider.getAll();
+    categories.clear();
+    categories.addAll(result);
   }
 }
