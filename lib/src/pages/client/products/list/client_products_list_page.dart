@@ -47,7 +47,7 @@ class ClientProductsListPage extends StatelessWidget {
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (_, index) {
-                        return _cardProduct(snapshot.data![index]);
+                        return _cardProduct(context, snapshot.data![index]);
                       },
                     );
                   } else {
@@ -69,61 +69,64 @@ class ClientProductsListPage extends StatelessWidget {
     );
   }
 
-  Widget _cardProduct(Product product) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-          child: ListTile(
-            title: Text(product.name ?? ''),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  product.description ?? '',
-                  maxLines: 2,
-                  style: const TextStyle(fontSize: 13),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '\$${product.price!.toString()}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
-            ),
-            trailing: SizedBox(
-              width: 70,
-              height: 60,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: FadeInImage(
-                  image: product.image1 != null
-                      ? NetworkImage(product.image1!)
-                      : const AssetImage('assets/img/no-image.png')
-                          as ImageProvider,
-                  placeholder: const AssetImage('assets/img/no-image.png'),
-                  fadeInDuration: const Duration(milliseconds: 50),
-                  fit: BoxFit.cover,
+  Widget _cardProduct(BuildContext context, Product product) {
+    return GestureDetector(
+      onTap: () => con.openBottonSheet(context, product),
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+            child: ListTile(
+              title: Text(product.name ?? ''),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    product.description ?? '',
+                    maxLines: 2,
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '\$${product.price!.toString()}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  )
+                ],
+              ),
+              trailing: SizedBox(
+                width: 70,
+                height: 60,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: FadeInImage(
+                    image: product.image1 != null
+                        ? NetworkImage(product.image1!)
+                        : const AssetImage('assets/img/no-image.png')
+                            as ImageProvider,
+                    placeholder: const AssetImage('assets/img/no-image.png'),
+                    fadeInDuration: const Duration(milliseconds: 50),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const Divider(
-          thickness: 1,
-          indent: 37,
-          endIndent: 37,
-        ),
-      ],
+          const Divider(
+            thickness: 1,
+            indent: 37,
+            endIndent: 37,
+          ),
+        ],
+      ),
     );
   }
 }
