@@ -10,9 +10,13 @@ import 'package:flutter_app_delivery_2/src/models/user.dart';
 import 'package:path/path.dart';
 
 class ProductsProvider extends GetConnect {
+
+    String url = Environment.API_URL + 'api/products';
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
+
   Future<List<Product>> findByCategory(String idCategory) async {
-    Response response = await get('$url/api/products/findByCategory/$idCategory', headers: {
+
+    Response response = await get('$url/findByCategory/$idCategory', headers: {
       'Content-Type': 'application/json',
       'Authorization': userSession.sessionToken ?? ''
     }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
