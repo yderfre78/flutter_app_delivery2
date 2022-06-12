@@ -1,20 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter_app_delivery_2/src/models/product.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ClientProductsDetailController extends GetxController {
-  Product? product;
-  var counter = 0.obs;
-  var price = 0.0.obs;
-
   List<Product> selectedProducts = [];
 
-  ClientProductsDetailController(Product product) {
-    this.product = product;
-    price.value = product.price ?? 0.0;
+  ClientProductsDetailController() {}
 
-    // LOS PRODUCTOS ALMACENADOS EN SESSION
+  void checkIfProductsWasAdded(Product product, var price, var counter) {
+    price.value = product.price ?? 0.0;
 
     if (GetStorage().read('shopping_cart') != null) {
       if (GetStorage().read('shopping_cart') is List<Product>) {
@@ -25,25 +22,34 @@ class ClientProductsDetailController extends GetxController {
       }
       int index =
           selectedProducts.indexWhere((element) => element.id == product.id);
-      counter.value = selectedProducts[index].quantity ?? 0;
-      price.value = product.price! * counter.value;
 
-      selectedProducts.forEach((p) {
-        print('Product: ${p.toJson()}');
-      });
+      if (index != -1) {
+        //EL PRODUCTO YA FUE AGREGADO
+        counter.value = selectedProducts[index].quantity ?? 0;
+        price.value = product.price! * counter.value;
+        selectedProducts.forEach(
+          (p) {
+            print('Product: ${p.toJson()}');
+          },
+        );
+      }
     }
   }
 
-  void addToCart() {
+  void addToCart(Product product, var price, var counter) {
     if (counter.value > 0) {
       int index = selectedProducts.indexWhere(
-        (p) => p.id == product!.id,
+        (p) => p.id == product.id,
       );
       if (index == -1) {
-        if (product?.quantity == null) {
-          product?.quantity = 1;
+        if (product.quantity == null) {
+          if (counter.value > 0) {
+            product.quantity = counter.value;
+          } else {
+            product.quantity = 1;
+          }
         }
-        selectedProducts.add(product!);
+        selectedProducts.add(product);
       } else {
         // YA HA SIDO AGREGADO EN STORAGE
         selectedProducts[index].quantity = counter.value;
@@ -55,8 +61,7 @@ class ClientProductsDetailController extends GetxController {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           fontSize: 16.0);
-    }
-    else{
+    } else {
       Fluttertoast.showToast(
           msg: "Debes Selecciona al menos 1 producto",
           toastLength: Toast.LENGTH_SHORT,
@@ -67,15 +72,16 @@ class ClientProductsDetailController extends GetxController {
     //VALIDAR SI EL PRODUCTO YA FUE AGREGADO CON GETSTRAGE A LA SESSION DEL DISPOSITIVO
   }
 
-  void addItem() {
+  void addItem(Product product, var price, var counter) {
     counter.value++;
-    price.value = product!.price! * counter.value;
+    print('PRODUCTO AGREGADO: ${product.toJson()}');
+    price.value = product.price! * counter.value;
   }
 
-  void removeItem() {
+  void removeItem(Product product, var price, var counter) {
     if (counter.value > 0) {
       counter.value--;
-      price.value = product!.price! * counter.value;
+      price.value = product.price! * counter.value;
     }
   }
 }

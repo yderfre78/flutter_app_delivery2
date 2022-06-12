@@ -18,7 +18,12 @@ class ClientProfileInfoPage extends StatelessWidget {
                 _imageUser(context),
               ],
             ),
-            _buttomSignOut()
+            Column(
+              children: [
+                _buttomSignOut(),
+                _buttomRoles(),
+              ],
+            ),
           ],
         ),
       ),
@@ -136,6 +141,21 @@ class ClientProfileInfoPage extends StatelessWidget {
             size: 30,
             color: Colors.white,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buttomRoles() {
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      alignment: Alignment.topRight,
+      child: IconButton(
+        onPressed: () => con.goToRoles(),
+        icon: Icon(
+          Icons.supervised_user_circle,
+          size: 30,
+          color: Colors.white,
         ),
       ),
     );

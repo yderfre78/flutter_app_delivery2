@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_delivery_2/src/models/category.dart';
 import 'package:flutter_app_delivery_2/src/models/product.dart';
+import 'package:flutter_app_delivery_2/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/register/register_page.dart';
@@ -22,8 +23,19 @@ class ClientProductsListPage extends StatelessWidget {
         length: con.categories.length,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
+            preferredSize: const Size.fromHeight(110),
             child: AppBar(
+              flexibleSpace: Container(
+                margin: EdgeInsets.only(top: 10),
+                alignment: Alignment.topCenter,
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  children: [
+                    _textFieldSearch(context),
+                    _iconShoppingCart(),
+                  ],
+                ),
+              ),
               bottom: TabBar(
                 isScrollable: true,
                 indicatorColor: Colors.amber,
@@ -64,6 +76,57 @@ class ClientProductsListPage extends StatelessWidget {
               },
             );
           }).toList()),
+        ),
+      ),
+    );
+  }
+
+  Widget _iconShoppingCart() {
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(
+            Icons.shopping_cart_outlined,
+            size: 35,
+          ),
+          onPressed: () => con.goToOrderCreate(),
+        ),
+      ),
+    );
+  }
+
+  Widget _textFieldSearch(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.75,
+        height: 55,
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'Buscar Producto',
+            hintStyle: TextStyle(
+              fontSize: 17,
+              color: Colors.grey[600],
+            ),
+            fillColor: Colors.white,
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            suffixIcon: const Icon(
+              Icons.search,
+              color: Colors.grey,
+            ),
+          ),
         ),
       ),
     );
