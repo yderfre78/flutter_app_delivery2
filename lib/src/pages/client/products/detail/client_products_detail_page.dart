@@ -46,7 +46,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                 child: const Text(
                   '-',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.black,    
                     fontSize: 22,
                   ),
                 ),
