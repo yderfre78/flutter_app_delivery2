@@ -1,26 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_delivery_2/src/models/product.dart';
+import 'package:flutter_app_delivery_2/src/pages/client/products/detail/client_products_detail_controller.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:get/get.dart';
 
 class ClientProductsDetailPage extends StatelessWidget {
   Product? product;
+  late ClientProductsDetailController con;
 
-  ClientProductsDetailPage({required this.product});
+  ClientProductsDetailPage({required this.product}) {
+    con = Get.put(ClientProductsDetailController(product!));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar:
-          Container(height: 100, child: _buttonsAddToCart(context)),
-      body: Column(
-        children: [
-          _imageSlideShow(context),
-          _textTitle(),
-          _textDescrption(),
-          _price(),
-        ],
-      ),
-    );
+    return Obx(() => Scaffold(
+          bottomNavigationBar:
+              SizedBox(height: 100, child: _buttonsAddToCart(context)),
+          body: Column(
+            children: [
+              _imageSlideShow(context),
+              _textTitle(),
+              _textDescrption(),
+              _price(),
+            ],
+          ),
+        ));
   }
 
   Widget _buttonsAddToCart(BuildContext context) {
@@ -33,7 +40,7 @@ class ClientProductsDetailPage extends StatelessWidget {
           child: Row(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => con.removeItem(),
                 child: const Text(
                   '-',
                   style: TextStyle(
@@ -42,7 +49,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(40, 40),
+                  minimumSize: const Size(40, 40),
                   primary: Colors.white,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -54,20 +61,20 @@ class ClientProductsDetailPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: const Text(
-                  '0',
-                  style: TextStyle(
+                child: Text(
+                  '${con.counter.value}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 22,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
-                  minimumSize: Size(40, 37),
+                  minimumSize: const Size(40, 37),
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => con.addItem(),
                 child: const Text(
                   '+',
                   style: TextStyle(
@@ -76,7 +83,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(40, 40),
+                  minimumSize: const Size(40, 40),
                   primary: Colors.white,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -86,12 +93,12 @@ class ClientProductsDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => con.addToCart(),
                 child: Text(
-                  'Agregar   ${product?.price ?? ''}',
-                  style: TextStyle(
+                  'Agregar   ${con.price.value}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15,
                   ),
@@ -129,7 +136,7 @@ class ClientProductsDetailPage extends StatelessWidget {
   Widget _textDescrption() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: 25, left: 30, right: 30),
+      margin: const EdgeInsets.only(top: 25, left: 30, right: 30),
       child: Text(
         product?.description ?? '',
         style: const TextStyle(
