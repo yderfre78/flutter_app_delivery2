@@ -87,7 +87,7 @@ class ClientProductsListPage extends StatelessWidget {
                   Text(
                     product.description ?? '',
                     maxLines: 2,
-                    style: const TextStyle(fontSize: 13),
+                    style: const TextStyle(fontSize: 12),
                   ),
                   const SizedBox(
                     height: 10,
