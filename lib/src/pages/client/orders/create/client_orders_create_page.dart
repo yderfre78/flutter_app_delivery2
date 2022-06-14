@@ -9,51 +9,64 @@ class ClientOrdersCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        height: 100,
-        child: _totalToPay(context),
-        margin: EdgeInsets.only(bottom: 30),
-      ),
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text(
-          'Mi Orden',
-          style: TextStyle(color: Colors.black),
+    return Obx(
+      () => Scaffold(
+        bottomNavigationBar: Container(
+          color: const Color.fromRGBO(245, 245, 245, 1),
+          height: 100,
+          child: _totalToPay(context),
+          margin: EdgeInsets.only(bottom: 30),
         ),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          title: const Text(
+            'Mi Orden',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        body: con.selectedProducts.length > 0
+            ? ListView(
+                children: con.selectedProducts.map((Product product) {
+                return _cardProduct(product);
+              }).toList())
+            : Container(
+                alignment: Alignment.center,
+                child: NoDataWidget(text: 'No hay productos en el carrito')),
       ),
-      body: con.selectedProducts.length > 0
-          ? ListView(
-              children: con.selectedProducts.map((Product product) {
-              return _cardProduct(product);
-            }).toList())
-          : NoDataWidget(text: 'No hay productos en el carrito'),
     );
   }
 
-  Widget _totalToPay(context) {
+  Widget _totalToPay(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Total: \$ 0.0 '),
-          Divider(height: 1, color: Colors.grey[400]),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-              ),
-              child: const Text(
-                'CONFIRMAR ORDEN',
-                style: TextStyle(color: Colors.black, fontSize: 13),
+      child: Container(
+        margin: const EdgeInsets.only(left: 20, top: 25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Total: \$ ${con.total.value} ',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ],
+            Divider(height: 1, color: Colors.grey[400]),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: ElevatedButton(
+                onPressed: () => con.goToAdressList(),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(15),
+                ),
+                child: const Text(
+                  'CONFIRMAR ORDEN',
+                  style: TextStyle(color: Colors.black, fontSize: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -80,7 +93,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
           Column(
             children: [
               _textPrice(product),
-              _iconDelete(),
+              _iconDelete(product),
             ],
           )
         ],
@@ -88,13 +101,13 @@ class ClientOrdersCreatePage extends StatelessWidget {
     );
   }
 
-  Widget _iconDelete() {
+  Widget _iconDelete(Product product) {
     return IconButton(
       icon: const Icon(
         Icons.delete,
         color: Colors.red,
       ),
-      onPressed: () {},
+      onPressed: () => con.deleteItem(product),
     );
   }
 
@@ -115,7 +128,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () => con.removeItem(product),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
@@ -140,7 +153,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
           child: Text('${product.quantity ?? 0}'),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () => con.addItem(product),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
