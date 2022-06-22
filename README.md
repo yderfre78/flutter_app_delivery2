@@ -17,3 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 # flutter_app_delivery2
 
 # Flutter Version 2.8.1
+
+# Remove spaces from json (https://www.browserling.com/tools/remove-all-whitespace)

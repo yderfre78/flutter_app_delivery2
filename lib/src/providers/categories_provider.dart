@@ -22,7 +22,7 @@ class CategoriesProvider extends GetConnect {
       return [];
     }
 
-    List<Category> categories = Category.fromJsonList(response.body);
+    List<Category>? categories = Category.fromJsonList(response.body);
 
     return categories;
   }

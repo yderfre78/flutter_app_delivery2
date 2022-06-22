@@ -43,7 +43,7 @@ class Product {
         quantity: json["quantity"],
       );
   static List<Product> fromJsonList(List<dynamic> jsonList) {
-    List<Product> toList = [];
+    List<Product>? toList = [];
 
     jsonList.forEach((item) {
       Product product = Product.fromJson(item);

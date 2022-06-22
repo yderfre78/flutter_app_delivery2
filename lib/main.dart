@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_delivery_2/src/models/user.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/adress/create/client_address_create_page.dart';
 import 'package:flutter_app_delivery_2/src/pages/client/adress/list/client_adress_list_page.dart';
+import 'package:flutter_app_delivery_2/src/pages/client/adress/map/client_adress_map_page.dart';
 
 
 import 'package:flutter_app_delivery_2/src/pages/client/home/client_home_page.dart';
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/client/orders/create',page: () => ClientOrdersCreatePage()),
         GetPage(name: '/client/address/create',page: () => ClientAddressCreatePage()),
         GetPage(name: '/client/address/list',page: () => ClientAddressListPage()),
+        GetPage(name: '/client/address/map',page: () => ClientAddressMapPage()),
         
        
 
