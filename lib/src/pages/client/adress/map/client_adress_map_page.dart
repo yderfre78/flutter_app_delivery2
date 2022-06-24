@@ -8,7 +8,7 @@ class ClientAddressMapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
           title: const Text(
@@ -23,20 +23,23 @@ class ClientAddressMapPage extends StatelessWidget {
             _iconMyLocation(),
             _buttonAccept(context)
           ],
-        ));
+        )));
   }
 
   Widget _googleMaps() {
     return GoogleMap(
-      initialCameraPosition: con.initialPosition,
-      mapType: MapType.normal,
-      onMapCreated: con.onMapCreated,
-      myLocationButtonEnabled: false,
-      myLocationEnabled: false,
-      onCameraMove: (position) {
-        con.initialPosition = position;
-      },
-    );
+        initialCameraPosition: con.initialPosition,
+        mapType: MapType.normal,
+        onMapCreated: con.onMapCreated,
+        myLocationButtonEnabled: false,
+        myLocationEnabled: false,
+        onCameraMove: (position) {
+          con.initialPosition = position;
+        },
+        onCameraIdle: () async {
+          await con
+              .setLocationDraggableInfo(); //EMPEZAR A OBTENER LA LAT Y LNG DE LA POSICION CENTRAL DEL MAPA
+        });
   }
 
   Widget _cardAdress(context) {
@@ -54,8 +57,8 @@ class ClientAddressMapPage extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: const Text(
-            'Name Address',
+          child: Text(
+            con.adressName.value.toString(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 13,
@@ -89,9 +92,7 @@ class ClientAddressMapPage extends StatelessWidget {
       ),
       alignment: Alignment.bottomCenter,
       child: ElevatedButton(
-        onPressed: () {
-          Get.back();
-        },
+        onPressed: ()=>con.selectRefOption(context),
         child: const Text(
           'Seleccionar este punto',
           style: TextStyle(
@@ -100,11 +101,10 @@ class ClientAddressMapPage extends StatelessWidget {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.all(10)
-        ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding: const EdgeInsets.all(10)),
       ),
     );
   }

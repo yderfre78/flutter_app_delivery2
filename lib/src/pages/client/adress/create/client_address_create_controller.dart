@@ -11,12 +11,14 @@ class ClientAddressCreateController extends GetxController {
     Get.offAllNamed('/client/address/list');
   }
 
-  void openGoogleMaps(BuildContext context) {
-    showMaterialModalBottomSheet(
+  void openGoogleMaps(BuildContext context) async {
+    Map<String, dynamic> refpointMap = await showMaterialModalBottomSheet(
       context: context,
       builder: (context) => ClientAddressMapPage(),
       isDismissible: false,
-      enableDrag: false
+      enableDrag: false,
     );
+    refPointController.text = refpointMap['adress'];
+    print('REF POINT: ${refpointMap['adress']}');
   }
 }

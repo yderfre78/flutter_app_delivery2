@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as location;
 
 class ClientAddressMapController extends GetxController {
   CameraPosition initialPosition = const CameraPosition(
@@ -10,17 +13,81 @@ class ClientAddressMapController extends GetxController {
     zoom: 14,
   );
 
+  LatLng? adressLatLng;
+  var adressName = ''.obs;
+
   Completer<GoogleMapController> mapController = Completer();
+
+  Position? position;
+  ClientAddressMapController() {
+    checkGPS(); //VERIFICA SI EL GPS ESTA ACTIVO
+  }
+
+  Future setLocationDraggableInfo() async {
+    double lat = initialPosition.target.latitude;
+    double lng = initialPosition.target.longitude;
+    List<Placemark> adress = await placemarkFromCoordinates(lat, lng);
+    if (adress.isNotEmpty) {
+      String direction = adress[0].thoroughfare ?? '';
+      String street = adress[0].subThoroughfare ?? '';
+      String city = adress[0].locality ?? '';
+      String department = adress[0].administrativeArea ?? '';
+      String country = adress[0].country ?? '';
+      adressName.value = '$direction # $street, $city, $department,';
+      adressLatLng = LatLng(lat, lng);
+      print('LAT LNG: $lat, $lng');
+    }
+  }
+
+  void checkGPS() async {
+    bool isLoactionEnabled = await Geolocator.isLocationServiceEnabled();
+    if (isLoactionEnabled == true) {
+      updateLocation();
+    } else {
+      bool locationGPS = await location.Location().requestService();
+      if (locationGPS == true) {
+        updateLocation();
+      }
+    }
+    ;
+  }
+
+  void updateLocation() async {
+    try {
+      await _determinePosition();
+      position =
+          await Geolocator.getLastKnownPosition(); //LAT Y LNG (POSITION ACTUAL)
+      animateCameraPosition(
+          position?.latitude ?? 4.6206918, position?.longitude ?? -74.191437);
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  void selectRefOption(BuildContext context) {
+    if (adressLatLng != null) {
+      Map<String, dynamic> data = {
+        'adress': adressName.value,
+        'lat': adressLatLng!.latitude,
+        'lng': adressLatLng!.longitude,
+      };
+      Navigator.pop(context, data);
+    }
+  }
+
+  Future animateCameraPosition(double lat, double lng) async {
+    GoogleMapController controller = await mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(target: LatLng(lat, lng), zoom: 14, bearing: 0),
+    ));
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
 

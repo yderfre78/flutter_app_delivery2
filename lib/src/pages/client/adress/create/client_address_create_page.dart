@@ -143,7 +143,7 @@ class ClientAddressCreatePage extends StatelessWidget {
       child: TextField(
         
         onTap: () => con.openGoogleMaps(context),
-        controller: con.addressController,
+        controller: con.refPointController,
         autofocus: false,
         focusNode: AlwaysDisabledFocusNode(),
         keyboardType: TextInputType.text,
@@ -152,7 +152,9 @@ class ClientAddressCreatePage extends StatelessWidget {
           prefixIcon: Icon(
             Icons.map,
           ),
+  
         ),
+
         
       ),
     );
