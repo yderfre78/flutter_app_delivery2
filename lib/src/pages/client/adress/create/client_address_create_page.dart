@@ -141,7 +141,6 @@ class ClientAddressCreatePage extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
-        
         onTap: () => con.openGoogleMaps(context),
         controller: con.refPointController,
         autofocus: false,
@@ -152,10 +151,7 @@ class ClientAddressCreatePage extends StatelessWidget {
           prefixIcon: Icon(
             Icons.map,
           ),
-  
         ),
-
-        
       ),
     );
   }
@@ -181,7 +177,7 @@ class ClientAddressCreatePage extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => con.createAdress(),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 15),
         ),

@@ -32,6 +32,16 @@ class Address {
         lat: json["lat"].toDouble(),
         lng: json["lng"].toDouble(),
       );
+  static List<Address> fromJsonList(List<dynamic> jsonList) {
+    List<Address> toList = [];
+
+    jsonList.forEach((item) {
+      Address address = Address.fromJson(item);
+      toList.add(address);
+    });
+
+    return toList;
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
